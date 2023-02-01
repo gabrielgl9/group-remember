@@ -33,4 +33,8 @@ public class Group implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 }

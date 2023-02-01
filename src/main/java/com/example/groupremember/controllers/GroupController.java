@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -28,4 +29,26 @@ public class GroupController {
         var groups = groupService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(groups);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Group> getOneGroup(@PathVariable(value = "id") UUID id) {
+        var group = this.groupService.findOne(id);
+        return ResponseEntity.status(HttpStatus.OK).body(group);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteGroup(@PathVariable(value = "id") UUID id) {
+        this.groupService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateGroup(@PathVariable(value = "id") UUID id,
+                                              @RequestBody GroupDto groupDto) {
+
+        var groupCreated = groupService.update(id, groupDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(groupCreated);
+    }
+
+
 }
